@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <title>Add a new build</title>
+</head>
+<body>
+<h1 class="d-flex justify-content-center">Add build</h1>
+<div class="d-flex justify-content-center">
+    <div class="col-sm-9">
+        <form th:object="${build}" th:action="@{save}" action="#" method="post">
+            <div class="form-group row">
+                <label for="buildName" class="col-2 col-form-label">Name</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" id="buildName" th:field="*{buildName}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="cpu" class="col-2 col-form-label">Cpu</label>
+                <div class="col-10">
+                    <select class="form-control" id="cpu" th:field="*{cpu}">
+                        <option th:each="cpu: ${cpus}"
+                                th:value="${cpu.cpuId}"
+                                th:text="${cpu.cpuName}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="motherboard" class="col-2 col-form-label">Motherboard</label>
+                <div class="col-10">
+                    <select class="form-control" id="motherboard" th:field="*{motherboard}">
+                        <option th:each="motherboard: ${motherboards}"
+                                th:value="${motherboard.motherboardId}"
+                                th:text="${motherboard.motherboardName}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="ram" class="col-2 col-form-label">Ram</label>
+                <div class="col-10">
+                    <select class="form-control" id="ram" th:field="*{ram}">
+                        <option th:each="ram: ${rams}"
+                                th:value="${ram.ramId}"
+                                th:text="${ram.ramName}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="gpu" class="col-2 col-form-label">GPU</label>
+                <div class="col-10">
+                    <select class="form-control" id="gpu" th:field="*{gpu}">
+                        <option th:each="gpu: ${gpus}"
+                                th:value="${gpu.gpuId}"
+                                th:text="${gpu.gpuName}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="d-flex flex-column">
+                    <div class="p-2">
+                        <input class="btn btn-success btn-block" type="submit" value="Save" href="/buildlist" />
+                    </div>
+                    <div class="p-2">
+                        <a class="btn btn-secondary btn-block" href="/buildlist">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Build List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" /-->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+
+</head>
+<body>
+<div class="d-flex justify-content-center">
+    <h1>Build List</h1>
+</div>
+<div class="d-flex justify-content-center">
+    <h3 th:inline="text" class="d-flex justify-content-start">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+    <form th:action="@{/logout}" method="post" class="d-flex justify-content-end">
+        <input type="submit" value="Sign Out" class="btn btn-danger btn-small"/>
+    </form>
+</div>
+<div class="d-flex justify-content-center">
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Cpu</th>
+            <th>Motherboard</th>
+            <th>Ram</th>
+            <th>Gpu</th>
+            <th sec:authorize="hasAuthority('ADMIN')"></th>
+            <th sec:authorize="hasAuthority('USER')"></th>
+        </tr>
+        <tr th:each="build : ${buildlist}">
+            <td th:text="${build.buildName}"></td>
+            <td th:text="${build.cpu.cpuName}"></td>
+            <td th:text="${build.motherboard.motherboardName}"></td>
+            <td th:text="${build.ram.ramName}"></td>
+            <td th:text="${build.gpu.gpuName}"></td>
+            <td sec:authorize="hasAuthority('ADMIN')">
+                <a class="btn btn-danger" th:href="@{/delete/{id}(id=${build.buildId})}">Delete</a>
+            </td>
+            <td sec:authorize="hasAuthority('USER')"><a th:href="@{/edit/{id}(id=${build.buildId})}">Edit</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${build.buildId})}">Edit</a></td>
+        </tr>
+    </table>
+</div>
+
+<div class="d-flex justify-content-center">
+    <a class="btn btn-success btn-lg" href="/addbuild">Add Build</a>
+</div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
